@@ -1,0 +1,46 @@
+
+--CREACION DE TABLAS
+
+CREATE TABLE SALARIES 
+(ID         number(*,0) primary key,
+EMPLOYEE_ID number(*,0) not null,
+PROJECT_ID  number(*,0),
+SALARY      number(10,2)not null)
+
+ALTER TABLE SALARIES
+ADD CONSTRAINT SALARY
+CHECK (SALARY>1000);
+
+
+CREATE TABLE EMPLOYEES
+(ID             number(*,0) primary key,
+MANAGER_ID      number(*,0),
+DATE_OF_JOINING date not null,
+FULL_NAME       varchar2(255 BYTE) not null)
+
+CREATE TABLE PROJECTS 
+(ID               number(*,0) primary key,
+CODE              varchar2(255 BYTE) not null,
+MANAGER_ID        number (*,0),
+BUDGET            number(10,2)not null,
+DATE_OF_BEGINNING date,
+DATE_OF_ENDING    date)
+
+
+--Creacion llaves foraneas
+
+ALTER TABLE SALARIES
+ADD FOREIGN KEY (EMPLOYEE_ID)
+REFERENCES EMPLOYEES(id);
+
+ALTER TABLE SALARIES
+ADD FOREIGN KEY (PROJECT_ID)
+REFERENCES PROJECTS(id);
+
+ALTER TABLE PROJECTS
+ADD FOREIGN KEY (MANAGER_ID)
+REFERENCES EMPLOYEES(id);
+
+ALTER TABLE EMPLOYEES
+ADD FOREIGN KEY (MANAGER_ID)
+REFERENCES EMPLOYEES(id);
